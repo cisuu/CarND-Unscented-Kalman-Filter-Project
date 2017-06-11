@@ -54,6 +54,12 @@ public:
 
   ///* Radar measurement noise standard deviation radius change in m/s
   double std_radrd_ ;
+  
+  ///* NIS for laser
+  double NIS_LASER_;
+  
+  ///* NIS for radar
+  double NIS_RADAR_;
 
   ///* Weights of sigma points
   VectorXd weights_;
@@ -102,6 +108,20 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+  
+  /**
+   * normalizes given angle to be within [-PI, PI]
+   * @param angle angle to be normalized
+   */
+  void Normalize_angle(double &angle);
+  
+  /**
+   * Updates the state and covariance matrix
+   * @param Zsig matrix with sigma points in measurement space
+   * @param R measurement covariance matrix
+   * @param meas_package The measurement at k+1
+   */
+  void Update(MatrixXd Zsig, MatrixXd R, MeasurementPackage meas_package);
 };
 
 #endif /* UKF_H */
